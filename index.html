@@ -3,226 +3,212 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Altalyze – Founder Financial Tools</title>
+  <title>Altalyze – Financial Intelligence</title>
   <link rel="stylesheet" href="styles.css" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="icon" href="data:,">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%234f46e5'/><path d='M30 70 L50 30 L70 70' stroke='white' stroke-width='8' fill='none'/></svg>">
 </head>
 <body>
-  <!-- Top navigation / header -->
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <div class="brand-mark">
-          <span class="brand-initial">A</span>
+  
+  <div class="app-container">
+    <header class="topbar">
+      <div class="topbar-content">
+        <div class="brand">
+          <div class="brand-logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 4L4 20H20L12 4Z" fill="currentColor" fill-opacity="0.2"/>
+              <path d="M12 4L4 20H20L12 4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="brand-name">Altalyze</span>
         </div>
-        <div class="brand-text">
-          <div class="brand-name">Altalyze</div>
-          <div class="brand-subtitle">Founder Financial Tools</div>
+
+        <nav class="segmented-control">
+          <button class="nav-item active" data-tab="portfolio-tab">
+            Portfolio
+          </button>
+          <button class="nav-item" data-tab="valuation-tab">
+            Valuation
+          </button>
+          <div class="segment-indicator"></div>
+        </nav>
+
+        <div class="topbar-actions">
+           <div class="avatar">F</div>
         </div>
       </div>
-
-      <nav class="nav">
-        <button class="nav-item active" data-tab="portfolio-tab">
-          Portfolio Profit Simulator
-        </button>
-        <button class="nav-item" data-tab="valuation-tab">
-          Startup Valuation Calculator
-        </button>
-      </nav>
-    </div>
-  </header>
-
-  <main class="main">
-    <header class="main-header">
-      <h1>Founder Console</h1>
-      <p class="main-subtitle">
-        Run simple, transparent models to understand your portfolio and your startup’s valuation.
-      </p>
     </header>
 
-    <!-- Portfolio Profit Simulator -->
-    <section id="portfolio-tab" class="panel active">
-      <div class="panel-header">
-        <h2>Portfolio Profit Simulator</h2>
-        <p class="panel-subtitle">
-          Model how capital compounds over time with optional annual contributions.
-        </p>
-      </div>
+    <main class="main-content">
+      
+      <section id="portfolio-tab" class="view active fade-in">
+        <header class="section-header">
+          <h1>Portfolio Simulator</h1>
+          <p>Project how your capital compounds over time using annual growth models.</p>
+        </header>
 
-      <div class="grid">
-        <div class="card">
-          <form id="portfolio-form" class="form">
-            <div class="form-group">
-              <label for="initialAmount">Initial investment (₹)</label>
-              <input type="number" id="initialAmount" min="0" step="1000" required />
-            </div>
-
-            <div class="form-group">
-              <label for="annualContribution">
-                Yearly contribution (₹)
-                <span class="hint">Optional. Set to 0 for a lump-sum model.</span>
-              </label>
-              <input type="number" id="annualContribution" min="0" step="1000" value="0" />
-            </div>
-
-            <div class="form-group">
-              <label for="rate">Expected annual return (%)</label>
-              <input type="number" id="rate" min="0" max="50" step="0.1" required />
-            </div>
-
-            <div class="form-group">
-              <label for="years">Investment duration (years)</label>
-              <input type="number" id="years" min="1" max="50" required />
-            </div>
-
-            <button type="submit" class="primary-btn">Run simulation</button>
-          </form>
-        </div>
-
-        <div class="card">
-          <div id="portfolio-result" class="result-block hidden">
-            <div class="result-header">
-              <h3>Summary</h3>
-            </div>
-            <div class="result-grid">
-              <div>
-                <span class="label">Total invested</span>
-                <div class="value" id="totalInvested"></div>
+        <div class="dashboard-grid">
+          <div class="card input-card">
+            <form id="portfolio-form" class="clean-form">
+              
+              <div class="input-group">
+                <label for="initialAmount">Initial Investment</label>
+                <div class="input-wrapper">
+                  <span class="prefix">₹</span>
+                  <input type="text" inputmode="numeric" id="initialAmount" placeholder="10,00,000" />
+                </div>
               </div>
-              <div>
-                <span class="label">Projected value</span>
-                <div class="value" id="finalValue"></div>
+
+              <div class="input-group">
+                <label for="annualContribution">Annual Contribution</label>
+                <div class="input-wrapper">
+                  <span class="prefix">₹</span>
+                  <input type="text" inputmode="numeric" id="annualContribution" placeholder="0" />
+                </div>
+                <span class="helper-text">Optional recurring addition</span>
               </div>
-              <div>
-                <span class="label">Total profit</span>
-                <div class="value" id="totalProfit"></div>
+
+              <div class="row-group">
+                <div class="input-group">
+                  <label for="rate">Return Rate</label>
+                  <div class="input-wrapper">
+                    <input type="number" id="rate" placeholder="12" step="0.1" />
+                    <span class="suffix">%</span>
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <label for="years">Duration</label>
+                  <div class="input-wrapper">
+                    <input type="number" id="years" placeholder="10" max="50" />
+                    <span class="suffix">Yrs</span>
+                  </div>
+                </div>
               </div>
-            </div>
-            <p class="note">
-              This is a simplified projection using annual compounding. Real portfolios will move up and down in between.
-            </p>
+
+            </form>
           </div>
 
-          <div class="chart-block hidden" id="chart-container">
-            <div class="chart-header">
-              <h3>Value over time</h3>
-              <p class="chart-subtitle">Year-end portfolio value for each year of the simulation.</p>
+          <div class="card result-card">
+            <div class="kpi-grid">
+              <div class="kpi">
+                <span class="kpi-label">Projected Value</span>
+                <span class="kpi-value highlight" id="finalValue">₹0</span>
+              </div>
+              <div class="kpi">
+                <span class="kpi-label">Total Profit</span>
+                <span class="kpi-value success" id="totalProfit">₹0</span>
+              </div>
+              <div class="kpi">
+                <span class="kpi-label">Total Invested</span>
+                <span class="kpi-value muted" id="totalInvested">₹0</span>
+              </div>
             </div>
-            <canvas id="portfolioChart"></canvas>
+            
+            <div class="chart-wrapper">
+              <canvas id="portfolioChart"></canvas>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Startup Valuation Calculator -->
-    <section id="valuation-tab" class="panel">
-      <div class="panel-header">
-        <h2>Startup Valuation Calculator</h2>
-        <p class="panel-subtitle">
-          A structured way to think about revenue multiples, growth, margins and unit economics.
-        </p>
-      </div>
+      <section id="valuation-tab" class="view fade-in">
+        <header class="section-header">
+          <h1>Startup Valuation</h1>
+          <p>Estimate value based on revenue multiples, margins, and unit economics.</p>
+        </header>
 
-      <div class="grid">
-        <div class="card">
-          <form id="valuation-form" class="form">
-            <div class="form-group">
-              <label for="revenue">Annual revenue (₹)</label>
-              <input type="number" id="revenue" min="0" step="100000" required />
-            </div>
-
-            <div class="form-group">
-              <label for="growth">Year-on-year growth rate (%)</label>
-              <input type="number" id="growth" min="0" max="300" step="1" required />
-            </div>
-
-            <div class="form-group">
-              <label for="margin">Profit margin (%)</label>
-              <input type="number" id="margin" min="-100" max="100" step="1" required />
-            </div>
-
-            <div class="form-group">
-              <label for="ltv">
-                LTV (Lifetime Value)
-                <span class="hint">Optional. Useful for subscription or repeat-purchase models.</span>
-              </label>
-              <input type="number" id="ltv" min="0" step="100" />
-            </div>
-
-            <div class="form-group">
-              <label for="cac">
-                CAC (Customer Acquisition Cost)
-                <span class="hint">Optional. Combine with LTV for a sharper view.</span>
-              </label>
-              <input type="number" id="cac" min="0" step="10" />
-            </div>
-
-            <div class="form-group inline">
-              <div>
-                <span class="label">FX context</span>
-                <p class="hint">
-                  A live USD/INR rate is used to provide an approximate valuation in USD. If unavailable, figures stay in INR.
-                </p>
+        <div class="dashboard-grid">
+          <div class="card input-card">
+            <form id="valuation-form" class="clean-form">
+              <div class="input-group">
+                <label for="revenue">Annual Revenue (ARR)</label>
+                <div class="input-wrapper">
+                  <span class="prefix">₹</span>
+                  <input type="text" inputmode="numeric" id="revenue" placeholder="5,00,00,000" />
+                </div>
               </div>
-              <div>
-                <span class="label small">USD/INR</span>
-                <div id="fxRateDisplay" class="value small">Fetching…</div>
-              </div>
-            </div>
 
-            <button type="submit" class="primary-btn">Estimate valuation</button>
-          </form>
-        </div>
-
-        <div class="card">
-          <div id="valuation-result" class="result-block hidden">
-            <div class="result-header">
-              <h3>Valuation snapshot</h3>
-            </div>
-
-            <div class="result-grid">
-              <div>
-                <span class="label">Suggested revenue multiple</span>
-                <div class="value" id="multiple"></div>
+              <div class="row-group">
+                <div class="input-group">
+                  <label for="growth">YoY Growth</label>
+                  <div class="input-wrapper">
+                    <input type="number" id="growth" placeholder="100" />
+                    <span class="suffix">%</span>
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label for="margin">Net Margin</label>
+                  <div class="input-wrapper">
+                    <input type="number" id="margin" placeholder="15" />
+                    <span class="suffix">%</span>
+                  </div>
+                </div>
               </div>
-              <div>
-                <span class="label">Estimated valuation (₹)</span>
-                <div class="value" id="valuation"></div>
+
+              <div class="divider"><span>Unit Economics (Optional)</span></div>
+
+              <div class="row-group">
+                <div class="input-group">
+                  <label for="ltv">LTV</label>
+                  <div class="input-wrapper">
+                    <span class="prefix">₹</span>
+                    <input type="text" inputmode="numeric" id="ltv" placeholder="2000" />
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label for="cac">CAC</label>
+                  <div class="input-wrapper">
+                    <span class="prefix">₹</span>
+                    <input type="text" inputmode="numeric" id="cac" placeholder="500" />
+                  </div>
+                </div>
               </div>
-              <div>
-                <span class="label">Estimated valuation (USD)</span>
-                <div class="value" id="valuationUsd"></div>
+
+              <div class="fx-status">
+                <div class="status-dot"></div>
+                <span id="fxRateDisplay">USD/INR Loading...</span>
+              </div>
+            </form>
+          </div>
+
+          <div class="card result-card">
+            <div class="kpi-grid">
+              <div class="kpi">
+                <span class="kpi-label">Est. Valuation (INR)</span>
+                <span class="kpi-value highlight" id="valuation">₹0</span>
+              </div>
+              <div class="kpi">
+                <span class="kpi-label">Est. Valuation (USD)</span>
+                <span class="kpi-value" id="valuationUsd">$0</span>
               </div>
             </div>
 
-            <div class="divider"></div>
-
-            <p class="label">Profile</p>
-            <p id="profile" class="profile-text"></p>
-
-            <div id="ltv-cac-section" class="extra-block hidden">
-              <div class="divider"></div>
-              <h4>LTV to CAC lens</h4>
-              <p>
-                <span class="label">LTV/CAC ratio:</span>
-                <span id="ltvCacRatio" class="value-inline"></span>
-              </p>
-              <p id="ltvCacNote" class="profile-text"></p>
+            <div class="metric-row">
+              <span class="metric-label">Applied Multiple</span>
+              <span class="metric-badge" id="multiple">0.0x</span>
             </div>
 
-            <p class="note">
-              This is a simplified model for directional thinking only. It is not financial advice or a formal valuation.
-            </p>
+            <div class="insight-box">
+              <p id="profile" class="insight-text">Enter metrics to see analysis.</p>
+            </div>
+
+            <div id="ltv-cac-container" class="insight-box hidden">
+              <div class="metric-row">
+                <span class="metric-label">LTV:CAC Ratio</span>
+                <span class="metric-value" id="ltvCacRatio">0</span>
+              </div>
+              <p id="ltvCacNote" class="insight-text sub-insight"></p>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
+
+    </main>
+  </div>
 
   <script src="script.js"></script>
 </body>
